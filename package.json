@@ -1,0 +1,25 @@
+{
+  "name": "rest_api_node_ts_server",
+  "version": "1.0.0",
+  "description": "REST API`s con Express y TypeScript",
+  "homepage": "https://github.com/Luis-Alvarezz/rest_api_node_ts_server#readme",
+  "bugs": {
+    "url": "https://github.com/Luis-Alvarezz/rest_api_node_ts_server/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Luis-Alvarezz/rest_api_node_ts_server.git"
+  },
+  "license": "ISC",
+  "author": "Luis Alvarez",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
+  }
+}
