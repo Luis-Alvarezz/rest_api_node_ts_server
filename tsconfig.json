@@ -1,14 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "outDir": "./dist"
+    "outDir": "./dist", // * En donde almacena el proyecto
+    "rootDir": "./src", // * En donde encuentra los archivos principales
+    "lib": ["ESNext"], // * Version de JS a la cual se compila el TS
+    "strict": false, // * Cuando es true, NO permite ningun 'any type'
+    "sourceMap": true, // * Genrea los MAPAS de fuentes util cuando trabajamos con un debugger
+    "esModuleInterop": true, // * Si trabajamos con Node.js, es posible tener modulos y Proyectos con COMMONJS Permite importar libreria escrita en COMMONJS
+    "declaration": true // * Genera los archivos de 'definicion'
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts"] // * Que archivos queremos incluir en la documentacion
 }
