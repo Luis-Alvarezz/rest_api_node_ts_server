@@ -6,7 +6,9 @@
     "strict": false, // * Cuando es true, NO permite ningun 'any type'
     "sourceMap": true, // * Genrea los MAPAS de fuentes util cuando trabajamos con un debugger
     "esModuleInterop": true, // * Si trabajamos con Node.js, es posible tener modulos y Proyectos con COMMONJS Permite importar libreria escrita en COMMONJS
-    "declaration": true // * Genera los archivos de 'definicion'
+    "declaration": true, // * Genera los archivos de 'definicion'
+    "experimentalDecorators": true, // * Habilitar el uso de decoradores (para Sequelize-typescript)
+    "emitDecoratorMetadata": true
   },
   "include": ["src/**/*.ts"] // * Que archivos queremos incluir en la documentacion
 }
