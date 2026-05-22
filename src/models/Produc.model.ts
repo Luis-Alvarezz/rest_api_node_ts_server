@@ -21,6 +21,7 @@ class Product extends Model {
   })
     price: number // * ESQUEMA
 
+  @Default(true)
   @Column({
     type: DataType.BOOLEAN
   })
