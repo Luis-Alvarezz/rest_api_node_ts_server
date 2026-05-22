@@ -17,7 +17,11 @@ async function connecDB() {
 }
 connecDB()
 
+// ! Instancia de Express
 const server = express() // * Sobre la const server agregamos toda la conf del proyecto
+
+// ! Leer datos de formularios
+server.use(express.json())
 
 server.use('/products', router) // * Ejecuta todos los request con el router
 
