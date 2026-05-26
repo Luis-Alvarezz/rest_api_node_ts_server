@@ -14,18 +14,19 @@ class Product extends Model {
     type: DataType.STRING(100) // * Similar a VARCHAR
   }) // ! Decorador campo 2 de DB
     // @Default('') // * VALOR PRESENTE en caso de no añadir nada
-    name: string  // * ESQUEMA
+    // name: string  // * ESQUEMA
+    declare name: string  // * ESQUEMA
 
   @Column({
     type: DataType.FLOAT(6, 2)
   })
-    price: number // * ESQUEMA
+    declare price: number // * ESQUEMA
 
   @Default(true)
   @Column({
     type: DataType.BOOLEAN
   })
-    availability: boolean // * ESQUEMA
+    declare availability: boolean // * ESQUEMA
 }
 
 export default Product
