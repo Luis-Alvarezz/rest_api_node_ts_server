@@ -2,6 +2,29 @@
 import { Request, Response } from "express";
 import Product from "../models/Produc.model";
 
+export const getProducts = async(req: Request, res: Response) => { //* req -> Lo que YO envio | res -> Lo que YO recibo
+  // console.log(req)
+  // console.log(res)
+  // const auth = true
+  // res.send('Hola Mundo en Express')
+  // const datos = [
+  //   { id: 1, nombre: 'Luis'},
+  //   { id: 2, nombre: 'Aiko'},
+  // ]
+  // res.send(datos) // * Enviar datos a la pantalla, tambien podemos usar .json
+  // res.json('Desde GET')
+  try {
+    // const products = await Product.findAll({ order: [['id', 'DESC']] })
+    // const products = await Product.findAll({ order: [['price', 'ASC']] })
+    // const products = await Product.findAll({ order: [['price', 'DESC']], limit: 2 })
+    const products = await Product.findAll({ order: [['price', 'DESC']], attributes: { exclude: ['createdAt', 'updatedAt'] }})
+    // const products = await Product.findAll()
+    res.json({data: products}) // * Lo hacemos similar a Axios al trabajar con res de API: {data: resAPI} y traer objetos con .map en React
+  } catch (error) {
+    console.log('Error in Handler GET', error);
+  }
+}
+
 export const createProduct = async (req: Request, res: Response) => { // * siempre que interactuamos con el modelo, las funciones deben ser ASINCRONAS
   // res.json('Desde POST en handlers/product');
   // console.log(req.body); // * Mostrar la inf en terminal habilitando el server.use(express.json())
@@ -15,6 +38,6 @@ export const createProduct = async (req: Request, res: Response) => { // * siemp
     const product = await Product.create(req.body) // * 1. Creamos el instancia y almacena en la DB
     res.json({data: product}) // * Retornamos el producto desde la DB
   } catch (error) {
-    console.log('Error en Handlers', error);
+    console.log('Error in Handler POST', error);
   }
 }
