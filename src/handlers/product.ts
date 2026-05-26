@@ -2,6 +2,10 @@
 import { Request, Response } from "express";
 import Product from "../models/Produc.model";
 
+type GetProductByIDParamsProp = {
+  id: string
+}
+
 export const getProducts = async(req: Request, res: Response) => { //* req -> Lo que YO envio | res -> Lo que YO recibo
   // console.log(req)
   // console.log(res)
@@ -22,6 +26,24 @@ export const getProducts = async(req: Request, res: Response) => { //* req -> Lo
     res.json({data: products}) // * Lo hacemos similar a Axios al trabajar con res de API: {data: resAPI} y traer objetos con .map en React
   } catch (error) {
     console.log('Error in Handler GET', error);
+  }
+}
+
+export const getProductByID = async(req: Request<GetProductByIDParamsProp>, res: Response) => {
+  try {
+    // console.log('Desde getProductByID');
+    // console.log(req.params.id);
+    const { id } = req.params
+    const productID = await Product.findByPk(id)
+    
+    if (!productID) {
+      return res.status(404).json({
+        error: 'Product not found'
+      })
+    }
+    res.json({ data: productID })
+  } catch (error) {
+    console.log('Error in Handler get by ID', error);
   }
 }
 

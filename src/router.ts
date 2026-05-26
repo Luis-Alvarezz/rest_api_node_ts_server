@@ -1,12 +1,19 @@
 import { Router } from "express"
-import { createProduct, getProducts } from "./handlers/product"
-import { body } from "express-validator"
+import { createProduct, getProducts, getProductByID } from "./handlers/product"
+import { body, param } from "express-validator"
 import { handleInpuErrors } from "./middleware"
+import { IsInt } from "sequelize-typescript"
 
 const router = Router() // * Creamos una instancia de la clase de Router
 
 // ! ROUTING
 router.get('/', getProducts)
+router.get('/:id', 
+  // ! Validacion para parametro unicamente string
+  param('id').isInt().withMessage('ID not validate integer'),
+  handleInpuErrors,
+  getProductByID
+)
 
 router.post('/',
    // ! Validacion
