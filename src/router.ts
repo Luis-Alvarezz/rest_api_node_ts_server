@@ -2,7 +2,6 @@ import { Router } from "express"
 import { createProduct, getProducts, getProductByID } from "./handlers/product"
 import { body, param } from "express-validator"
 import { handleInpuErrors } from "./middleware"
-import { IsInt } from "sequelize-typescript"
 
 const router = Router() // * Creamos una instancia de la clase de Router
 
@@ -17,11 +16,11 @@ router.get('/:id',
 
 router.post('/',
    // ! Validacion
-    body('name').notEmpty().withMessage('El nombre del Producto no puede ir vacio'),
+    body('name').notEmpty().withMessage('Product name cannot be empty'),
     body('price')
-      .isNumeric().withMessage('Valor No valido, debe ser numerico')
-      .notEmpty().withMessage('El precio del Producto no puede ir vacio')
-      .custom( (value) => value > 0 ).withMessage('El precio del Producto debe ser mayor a 0'),
+      .isNumeric().withMessage('Invalid value, must be numeric')
+      .notEmpty().withMessage('Price of Product cannot be empty')
+      .custom( (value) => value > 0 ).withMessage('Price of product must be greater than 0'),
     
   handleInpuErrors,
   createProduct
