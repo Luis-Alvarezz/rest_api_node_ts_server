@@ -63,3 +63,27 @@ export const createProduct = async (req: Request, res: Response) => { // * siemp
     console.log('Error in Handler POST', error);
   }
 }
+
+export const updateProduct = async (req: Request<GetProductByIDParamsProp>, res: Response) => {
+  // res.json('Desde put')
+  // console.log('Desde put en Handler')
+  const { id } = req.params
+    const productID = await Product.findByPk(id)
+    
+    if (!productID) {
+      return res.status(404).json({
+        error: 'Product not found'
+      })
+    }
+    // ! Actualizar
+    // console.log(req.body); // * Recuperar los datos
+    await productID.update(req.body) // * Guardado Parcial Opcion 1
+    // * Guardado estricto pero pierde parametros si no se especifican Opcion 2
+    // productID.name = req.body.name
+    // productID.price = req.body.price
+    // productID.availability = req.body.availability
+    await productID.save()
+    
+
+    res.json({ data: productID})
+}

@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { createProduct, getProducts, getProductByID } from "./handlers/product"
+import { createProduct, getProducts, getProductByID, updateProduct } from "./handlers/product"
 import { body, param } from "express-validator"
 import { handleInpuErrors } from "./middleware"
 
@@ -15,7 +15,7 @@ router.get('/:id',
 )
 
 router.post('/',
-   // ! Validacion
+   // ! Validation
     body('name').notEmpty().withMessage('Product name cannot be empty'),
     body('price')
       .isNumeric().withMessage('Invalid value, must be numeric')
@@ -26,9 +26,18 @@ router.post('/',
   createProduct
 )
 
-router.put('/', (req, res) => {
-  res.json('Desde PUT')
-})
+router.put('/:id',
+  // ! Validation
+    body('name').notEmpty().withMessage('Product name cannot be empty'),
+    body('price')
+      .isNumeric().withMessage('Invalid value, must be numeric')
+      .notEmpty().withMessage('Price of Product cannot be empty')
+      .custom( (value) => value > 0 ).withMessage('Price of product must be greater than 0'),
+    body('availability').isBoolean().withMessage('Invalid value, to availability, must be boolean') ,
+
+  handleInpuErrors,
+  updateProduct
+)
 
 router.patch('/', (req, res) => {
   res.json('Desde PATCH')
