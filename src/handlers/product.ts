@@ -87,3 +87,26 @@ export const updateProduct = async (req: Request<GetProductByIDParamsProp>, res:
 
     res.json({ data: productID})
 }
+
+export const updatedAvailability = async (req: Request<GetProductByIDParamsProp>, res: Response) => {
+   const { id } = req.params
+    const productID = await Product.findByPk(id)
+    
+    if (!productID) {
+      return res.status(404).json({
+        error: 'Product not found'
+      })
+    }
+    // ! Actualizar
+    // console.log(req.body); // * Recuperar los datos
+    // await productID.update(req.body) // * Guardado Parcial Opcion 1
+    // * Guardado estricto con PATCH:
+    // productID.availability = req.body.availability
+    productID.availability = !productID.dataValues.availability // * Invertir el valor booleano al momento de actualizar
+
+    await productID.save()
+    // console.log(productID.dataValues) // * Leer valores actualizados de la Base de Datos
+    // console.log(productID.dataValues.availability) // * Leer valores actualizados especificos de la Base de Datos
+
+    res.json({ data: productID})
+}
