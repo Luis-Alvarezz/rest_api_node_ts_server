@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { createProduct, getProducts, getProductByID, updateProduct, updatedAvailability } from "./handlers/product"
+import { createProduct, getProducts, getProductByID, updateProduct, updatedAvailability, deleteProductByID } from "./handlers/product"
 import { body, param } from "express-validator"
 import { handleInpuErrors } from "./middleware"
 
@@ -39,12 +39,18 @@ router.put('/:id',
   updateProduct
 )
 
-router.patch('/:id', 
+router.patch('/:id',
+  // ! Validacion
+  param('id').isInt().withMessage('ID invalid, need to be numeric'),
+  handleInpuErrors,
   updatedAvailability
 )
 
-router.delete('/', (req, res) => {
-  res.json('Desde DELETE')
-})
+router.delete('/:id',
+  // ! Validacion
+  param('id').isInt().withMessage('ID invalid, need to be numeric'),
+  handleInpuErrors,
+  deleteProductByID
+)
 
 export default router
