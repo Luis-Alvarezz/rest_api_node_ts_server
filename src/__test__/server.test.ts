@@ -13,5 +13,10 @@ describe('GET /api', () => {
     // console.log(response.text); // * Opcion 1.-Muestra Contenido de en Endpoint | NO Se coneta al endpoint
     // console.log(response.body.msg); // * Opcion 2.-Muestra Contenido de en Endpoint, actua como req.body de Express | Se coneta al endpoint
     expect(response.body.msg).toBe('Desde API en server.ts') // * Debe ser EXACTO a la res de la API
+
+    // ! Que NO debe hacer o cumplirse
+    expect(response.status).not.toBe(404)
+    expect(response.body.msg).not.toBe('desde api en server.ts')
+    expect(response.body.msg).not.toBe('desde api en server')
   })
 })
