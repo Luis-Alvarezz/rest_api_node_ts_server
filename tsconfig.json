@@ -11,7 +11,9 @@
     "emitDecoratorMetadata": true,
     "target": "esnext",
     "moduleResolution": "nodenext",
-    "module": "nodenext"
+    "module": "nodenext",
+    "types": ["Node", "jest"], // * Especificar a TS que usaremos Framework de Jest para test
+    "isolatedModules": true // * ts-jest pide por la version de Node 
   },
   "include": ["src/**/*.ts"] // * Que archivos queremos incluir en la documentacion
 }
