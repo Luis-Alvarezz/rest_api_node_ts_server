@@ -24,7 +24,7 @@ const server = express() // * Sobre la const server agregamos toda la conf del p
 server.use(express.json())
 
 // ! Ejecutar los verbos HTTP con handler y Middleware
-server.use('/products', router) // * Ejecuta todos los request con el router
+server.use('/api/products', router) // * Ejecuta todos los request con el router
 
 server.get('/api', (req, res) => {
   res.json({msg: 'Desde API en server.ts'})
