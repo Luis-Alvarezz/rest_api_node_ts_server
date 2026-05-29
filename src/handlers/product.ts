@@ -58,7 +58,7 @@ export const createProduct = async (req: Request, res: Response) => { // * siemp
   // ! Crear y Almacenar Instancia de body Opcion 2:
   try {
     const product = await Product.create(req.body) // * 1. Creamos el instancia y almacena en la DB
-    res.json({ data: product }) // * Retornamos el producto desde la DB
+    res.status(201).json({ data: product }) // * Retornamos el producto desde la DB
   } catch (error) {
     console.log('Error in Handler POST', error);
   }
