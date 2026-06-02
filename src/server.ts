@@ -4,7 +4,7 @@ import db from "./config/db";
 import colors from 'colors'
 
 // ! Conexion a DB
-async function connecDB() {
+export async function connectDB() {
   try {
     await db.authenticate()
     db.sync() // * En caso de que vayamos creando nuevos modelos, nuevas columnas a nuestra DB, las agrega
@@ -15,7 +15,7 @@ async function connecDB() {
     
   }
 }
-connecDB()
+// connectDB()
 
 // ! Instancia de Express
 const server = express() // * Sobre la const server agregamos toda la conf del proyecto
