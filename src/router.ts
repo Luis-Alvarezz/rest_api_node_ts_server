@@ -28,12 +28,13 @@ router.post('/',
 
 router.put('/:id',
   // ! Validation
-    body('name').notEmpty().withMessage('Product name cannot be empty'),
-    body('price')
-      .isNumeric().withMessage('Invalid value, must be numeric')
-      .notEmpty().withMessage('Price of Product cannot be empty')
-      .custom( (value) => value > 0 ).withMessage('Price of product must be greater than 0'),
-    body('availability').isBoolean().withMessage('Invalid value, to availability, must be boolean') ,
+  param('id').isInt().withMessage('ID invalid, need to be numeric'),
+  body('name').notEmpty().withMessage('Product name cannot be empty'),
+  body('price')
+    .isNumeric().withMessage('Invalid value, must be numeric')
+    .notEmpty().withMessage('Price of Product cannot be empty')
+    .custom( (value) => value > 0 ).withMessage('Price of product must be greater than 0'),
+  body('availability').isBoolean().withMessage('Invalid value, to availability, must be boolean') ,
 
   handleInpuErrors,
   updateProduct
