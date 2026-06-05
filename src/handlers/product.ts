@@ -2,7 +2,7 @@
 import { Request, Response } from "express";
 import Product from "../models/Produc.model";
 
-type GetProductByIDParamsProp = {
+type IDparamsProp = {
   id: string
 }
 
@@ -29,7 +29,7 @@ export const getProducts = async (req: Request, res: Response) => { //* req -> L
   }
 }
 
-export const getProductByID = async (req: Request<GetProductByIDParamsProp>, res: Response) => {
+export const getProductByID = async (req: Request<IDparamsProp>, res: Response) => {
   try {
     // console.log('Desde getProductByID');
     // console.log(req.params.id);
@@ -64,7 +64,7 @@ export const createProduct = async (req: Request, res: Response) => { // * siemp
   }
 }
 
-export const updateProduct = async (req: Request<GetProductByIDParamsProp>, res: Response) => {
+export const updateProduct = async (req: Request<IDparamsProp>, res: Response) => {
   // res.json('Desde put')
   // console.log('Desde put en Handler')
   const { id } = req.params
@@ -88,7 +88,7 @@ export const updateProduct = async (req: Request<GetProductByIDParamsProp>, res:
   res.json({ data: productID })
 }
 
-export const updatedAvailability = async (req: Request<GetProductByIDParamsProp>, res: Response) => {
+export const updatedAvailability = async (req: Request<IDparamsProp>, res: Response) => {
   const { id } = req.params
   const productID = await Product.findByPk(id)
 
@@ -112,7 +112,7 @@ export const updatedAvailability = async (req: Request<GetProductByIDParamsProp>
 }
 
 
-export const deleteProductByID = async (req, res) => {
+export const deleteProductByID = async (req: Request<IDparamsProp>, res: Response) => {
   // res.json('Desde DELETE ahora en Handler')
   const { id } = req.params
   const product = await Product.findByPk(id)
