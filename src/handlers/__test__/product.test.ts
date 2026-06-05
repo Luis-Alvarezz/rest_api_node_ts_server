@@ -107,3 +107,114 @@ describe('GET /api/products/:id', () => {
     expect(response.body).toHaveProperty('data')
   })
 })
+
+// ? 4.- Validacion al actualizar mediente PUT
+describe('PUT /api/products/:id', () => {
+  it('Should check a valid ID in the URL with integer number', async() => {
+    const response = await request(server).put('/api/products/not-valid-url').send({
+      name: "Monitor Curvo",
+      availability: true,
+      price: 300
+    })
+    expect(response.status).toBe(400)
+    expect(response.body).toHaveProperty('errors')
+    expect(response.body.errors).toHaveLength(1) // * Es un mensaje de error
+    expect(response.body.errors[0].msg).toBe('ID invalid, need to be numeric')
+  })
+
+  it ('Should display validation error messages when updating a producto', async() => {
+    const response = await request(server).put('/api/products/1').send({})
+
+    expect(response.status).toBe(400)
+    expect(response.body).toHaveProperty('errors')
+    expect(response.body.errors).toBeTruthy() // * Expresion (no true o false) Detecta que tiene algo el arreglo y lo trata como TRUE
+    expect(response.body.errors).toHaveLength(5)
+
+    // ! Que NO debe hacer
+    expect(response.status).not.toBe(200)
+    expect(response.body).not.toHaveProperty('data')
+  })
+
+  it ('Should validate that the price is greater than 0', async() => {
+    const response = await request(server).put('/api/products/1').send({ 
+      name: "Monitor Curvo",
+      availability: true,
+      price: 0
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toHaveProperty('errors')
+    expect(response.body.errors).toHaveLength(1)
+    expect(response.body.errors[0].msg).toBe('Price of product must be greater than 0')
+
+    // ! Que NO debe de hacer:
+    expect(response.status).not.toBe(200)
+    expect(response.body).not.toHaveProperty('data')
+  })
+
+  it ('Should return a 404 response for a non-existent product', async() => {
+    const productoID = 2000
+    const response = await request(server).put(`/api/products/${productoID}`).send({ 
+      name: "Monitor Curvo",
+      availability: true,
+      price: 300
+    })
+
+    expect(response.status).toBe(404)
+    expect(response.body).toHaveProperty('error')
+    expect(response.body.error).toBe('Product not found')
+
+    // ! Que NO debe de hacer:
+    expect(response.status).not.toBe(200)
+    expect(response.body).not.toHaveProperty('data')
+  })
+
+  it ('Should update an existing product with valid data', async() => {
+    const response = await request(server).put(`/api/products/1`).send({ 
+      name: "Monitor Curvo",
+      availability: true,
+      price: 300
+    })
+
+    expect(response.status).toBe(200)
+    expect(response.body).toHaveProperty('data')
+
+    // ! Que NO debe de hacer:
+    expect(response.status).not.toBe(400)
+    expect(response.body).not.toHaveProperty('errors')
+  })
+
+})
+
+// ? 5.- Validación al eliminar producto por ID:
+describe('DELETE /api/products/:id', () => {
+  it('Should check valid ID', async() => {
+    const response = await request(server).delete('/api/products/not-valid-url')
+    expect(response.status).toBe(400)
+    expect(response.body).toHaveProperty('errors')
+    expect(response.body.errors[0].msg).toBe('ID invalid, need to be numeric')
+    expect(response.body.errors).toHaveLength(1)
+  })
+
+  it('Should return a 404 error for a non-existent product', async() => {
+    const productoID = 2000
+    const response = await request(server).delete(`/api/products/${productoID}`)
+    expect(response.status).toBe(404)
+    expect(response.body).toHaveProperty('error')
+    expect(response.body.error).toBe('Product not found')
+
+    // ! Lo que NO se permite
+    expect(response.status).not.toBe(200)
+  })
+
+  it('Should delete a product', async() => {
+    const response = await request(server).delete('/api/products/1')
+    expect(response.status).toBe(200)
+    expect(response.body).toHaveProperty('data')
+    expect(response.body.data).toBe('Product Deleted')
+
+    // ! Lo que NO se permite:
+    expect(response.status).not.toBe(404)
+    expect(response.status).not.toBe(400)
+  })
+})
