@@ -218,3 +218,19 @@ describe('DELETE /api/products/:id', () => {
     expect(response.status).not.toBe(400)
   })
 })
+
+// ? 6.- Valiación para verbo PATCH
+describe('PATCH /api/products/:id', () => {
+  it('Should return a 404 response for a non-existing product', async() => {
+    const productID = 2000;
+    const response = await request(server).patch(`/api/products/${productID}`)
+
+    expect(response.status).toBe(404)
+    expect(response.body).toHaveProperty('error')
+    expect(response.body.error).toBe('Product not found')
+
+    // ! Lo que NO debe hacer:
+    expect(response.status).not.toBe(200)
+    expect(response.body).not.toHaveProperty('data')
+  })
+})
