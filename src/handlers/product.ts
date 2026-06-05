@@ -17,22 +17,37 @@ export const getProducts = async (req: Request, res: Response) => { //* req -> L
   // ]
   // res.send(datos) // * Enviar datos a la pantalla, tambien podemos usar .json
   // res.json('Desde GET')
-  try {
-    // const products = await Product.findAll({ order: [['id', 'DESC']] })
-    // const products = await Product.findAll({ order: [['price', 'ASC']] })
-    // const products = await Product.findAll({ order: [['price', 'DESC']], limit: 2 })
-    const products = await Product.findAll({ order: [['price', 'DESC']], attributes: { exclude: ['createdAt', 'updatedAt'] } })
+  // try {
+  //   // const products = await Product.findAll({ order: [['id', 'DESC']] })
+  //   // const products = await Product.findAll({ order: [['price', 'ASC']] })
+  //   // const products = await Product.findAll({ order: [['price', 'DESC']], limit: 2 })
+  //   const products = await Product.findAll({ order: [['price', 'DESC']], attributes: { exclude: ['createdAt', 'updatedAt'] } })
+  //   // const products = await Product.findAll()
+  //   res.json({ data: products }) // * Lo hacemos similar a Axios al trabajar con res de API: {data: resAPI} y traer objetos con .map en React
+  // } catch (error) {
+  //   console.log('Error in Handler GET', error);
+  // }
+  const products = await Product.findAll({ order: [['price', 'DESC']], attributes: { exclude: ['createdAt', 'updatedAt'] } })
     // const products = await Product.findAll()
     res.json({ data: products }) // * Lo hacemos similar a Axios al trabajar con res de API: {data: resAPI} y traer objetos con .map en React
-  } catch (error) {
-    console.log('Error in Handler GET', error);
-  }
 }
 
 export const getProductByID = async (req: Request<IDparamsProp>, res: Response) => {
-  try {
-    // console.log('Desde getProductByID');
-    // console.log(req.params.id);
+  // try {
+  //   // console.log('Desde getProductByID');
+  //   // console.log(req.params.id);
+  //   const { id } = req.params
+  //   const productID = await Product.findByPk(id)
+
+  //   if (!productID) {
+  //     return res.status(404).json({
+  //       error: 'Product not found'
+  //     })
+  //   }
+  //   res.json({ data: productID })
+  // } catch (error) {
+  //   console.log('Error in Handler get by ID', error);
+  // }
     const { id } = req.params
     const productID = await Product.findByPk(id)
 
@@ -42,9 +57,6 @@ export const getProductByID = async (req: Request<IDparamsProp>, res: Response) 
       })
     }
     res.json({ data: productID })
-  } catch (error) {
-    console.log('Error in Handler get by ID', error);
-  }
 }
 
 export const createProduct = async (req: Request, res: Response) => { // * siempre que interactuamos con el modelo, las funciones deben ser ASINCRONAS
@@ -56,12 +68,14 @@ export const createProduct = async (req: Request, res: Response) => { // * siemp
   // res.json({data: savedProduct}) // * Retornamos el producto desde la DB
 
   // ! Crear y Almacenar Instancia de body Opcion 2:
-  try {
-    const product = await Product.create(req.body) // * 1. Creamos el instancia y almacena en la DB
-    res.status(201).json({ data: product }) // * Retornamos el producto desde la DB
-  } catch (error) {
-    console.log('Error in Handler POST', error);
-  }
+  // try {
+  //   const product = await Product.create(req.body) // * 1. Creamos el instancia y almacena en la DB
+  //   res.status(201).json({ data: product }) // * Retornamos el producto desde la DB
+  // } catch (error) {
+  //   console.log('Error in Handler POST', error);
+  // }
+  const product = await Product.create(req.body) // * 1. Creamos el instancia y almacena en la DB
+  res.status(201).json({ data: product }) // * Retornamos el producto desde la DB
 }
 
 export const updateProduct = async (req: Request<IDparamsProp>, res: Response) => {
