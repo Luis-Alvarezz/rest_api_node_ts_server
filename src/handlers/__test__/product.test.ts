@@ -186,6 +186,36 @@ describe('PUT /api/products/:id', () => {
 
 })
 
+
+// ? 6.- Valiación para verbo PATCH
+describe('PATCH /api/products/:id', () => {
+  it('Should return a 404 response for a non-existing product', async() => {
+    const productID = 2000;
+    const response = await request(server).patch(`/api/products/${productID}`)
+
+    expect(response.status).toBe(404)
+    expect(response.body).toHaveProperty('error')
+    expect(response.body.error).toBe('Product not found')
+
+    // ! Lo que NO debe hacer:
+    expect(response.status).not.toBe(200)
+    expect(response.body).not.toHaveProperty('data')
+  })
+
+  it('Should updated the product availability', async() => {
+    const response = await request(server).patch('/api/products/1') // * A pesar de trabajar con el ID 2, aplicamos el force-true y elimina el ID previo de testing (1)
+    expect(response.status).toBe(200)
+    expect(response.body).toHaveProperty('data')
+    expect(response.body.data.availability).toBe(false)
+
+    // ! Que NO debe de hacer:
+    expect(response.status).not.toBe(404)
+    expect(response.status).not.toBe(400)
+    expect(response.body).not.toHaveProperty('error')
+  })
+})
+
+
 // ? 5.- Validación al eliminar producto por ID:
 describe('DELETE /api/products/:id', () => {
   it('Should check valid ID', async() => {
@@ -216,21 +246,5 @@ describe('DELETE /api/products/:id', () => {
     // ! Lo que NO se permite:
     expect(response.status).not.toBe(404)
     expect(response.status).not.toBe(400)
-  })
-})
-
-// ? 6.- Valiación para verbo PATCH
-describe('PATCH /api/products/:id', () => {
-  it('Should return a 404 response for a non-existing product', async() => {
-    const productID = 2000;
-    const response = await request(server).patch(`/api/products/${productID}`)
-
-    expect(response.status).toBe(404)
-    expect(response.body).toHaveProperty('error')
-    expect(response.body.error).toBe('Product not found')
-
-    // ! Lo que NO debe hacer:
-    expect(response.status).not.toBe(200)
-    expect(response.body).not.toHaveProperty('data')
   })
 })
