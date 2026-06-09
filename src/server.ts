@@ -2,6 +2,8 @@ import express  from "express";
 import router from "./router";
 import db from "./config/db";
 import colors from 'colors'
+import  SwaggerUi  from "swagger-ui-express";
+import swaggerSpec from "./config/swagger";
 
 // ! Conexion a DB
 export async function connectDB() {
@@ -28,8 +30,12 @@ server.use(express.json())
 // ! Ejecutar los verbos HTTP con handler y Middleware
 server.use('/api/products', router) // * Ejecuta todos los request con el router
 
-server.get('/api', (req, res) => {
-  res.json({msg: 'Desde API en server.ts'})
-})
+// ! EL test de /api se comento al añadir Swagger:
+// server.get('/api', (req, res) => {
+//   res.json({msg: 'Desde API en server.ts'})
+// })
+
+// ! Documentacion de Rest API
+server.use('/docs', SwaggerUi.serve, SwaggerUi.setup(swaggerSpec))
 
 export default server
