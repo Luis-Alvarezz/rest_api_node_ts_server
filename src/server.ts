@@ -5,17 +5,17 @@ import colors from 'colors'
 
 // ! Conexion a DB
 export async function connectDB() {
-  // try {
-  //   await db.authenticate()
-  //   db.sync() // * En caso de que vayamos creando nuevos modelos, nuevas columnas a nuestra DB, las agrega
-  //   console.log(colors.blue('Conexión Exitosa a la DB'));
-  // } catch (error) {
-  //   console.log(error);
-  //   console.log(colors.red.bold('Hubo un error al conectar la DB'));
-  // }
-  await db.authenticate()
-  db.sync() // * En caso de que vayamos creando nuevos modelos, nuevas columnas a nuestra DB, las agrega
-  console.log(colors.blue('Conexión Exitosa a la DB'));
+  try {
+    await db.authenticate()
+    db.sync() // * En caso de que vayamos creando nuevos modelos, nuevas columnas a nuestra DB, las agrega
+    // console.log(colors.blue('Conexión Exitosa a la DB'));
+  } catch (error) {
+    console.log(error);
+    console.log(colors.red.bold('Hubo un error al conectar la DB'));
+  }
+  // await db.authenticate()
+  // db.sync() // * En caso de que vayamos creando nuevos modelos, nuevas columnas a nuestra DB, las agrega
+  // console.log(colors.blue('Conexión Exitosa a la DB'));
 }
 // connectDB()
 

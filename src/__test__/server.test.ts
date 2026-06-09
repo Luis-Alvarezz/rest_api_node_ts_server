@@ -1,5 +1,7 @@
 import request from 'supertest' // * Enviar request, peticion a determinado Endpoint
 import server from '../server'
+import { connectDB } from '../server'
+import db from '../config/db'
 
 describe('GET /api', () => {
   // * Pruebas aquí
@@ -18,5 +20,18 @@ describe('GET /api', () => {
     expect(response.status).not.toBe(404)
     expect(response.body.msg).not.toBe('desde api en server.ts')
     expect(response.body.msg).not.toBe('desde api en server')
+  })
+})
+
+//  ! JEST: 
+jest.mock('../config/db')
+describe('Connect DB', () => {
+  it('Should handle database connection error', async() => {
+    // * Objeto y Funcion son las parametros, Espia la instancia de Sequilize (db) del metodo authenticate
+    jest.spyOn(db, 'authenticate').mockRejectedValueOnce(new Error('Hubo un error al conectar la DB')) // * Error virtual sin forzar o corromper codigo fuente (negando Promesa)
+    const consoleSpy = jest.spyOn(console, 'log') // * OBJ - console y Metodo - log (console.log) 
+
+    await connectDB()
+    expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Hubo un error al conectar la DB'))
   })
 })
