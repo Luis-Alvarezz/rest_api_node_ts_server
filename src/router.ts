@@ -52,9 +52,37 @@ const router = Router() // * Creamos una instancia de la clase de Router
  *                items:
  *                  $ref: '#/components/schemas/Product'
  */
-
 // ! ROUTING
 router.get('/', getProducts)
+
+/**
+ * * Docuemntando endpoint para ontener producto por ID:
+ * @swagger
+ * /api/products/{id}:
+ *    get:
+ *      summary: Get a Product by ID
+ *      tags: 
+ *        - Products
+ *      description: Return a producto based on its unique ID
+ *      parameters:
+ *      - in: path
+ *        name: id
+ *        description: The ID of the product to retrieve
+ *        required: true
+ *        schema:
+ *          type: integer
+ *      responses:
+ *        200:
+ *          description: Successful Response
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Product'
+ *        404:
+ *          description: Product not found
+ *        400:
+ *          description: Bad Request - Invalid ID
+ */
 router.get('/:id', 
   // ! Validacion para parametro unicamente string
   param('id').isInt().withMessage('ID not validate integer'),
