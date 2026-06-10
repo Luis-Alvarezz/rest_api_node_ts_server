@@ -6,6 +6,7 @@ import { handleInpuErrors } from "./middleware"
 const router = Router() // * Creamos una instancia de la clase de Router
 
 /**
+ * * Documentando productos y Atributos de Productos
 * @swagger
 * components:
 *     schemas:
@@ -31,6 +32,26 @@ const router = Router() // * Creamos una instancia de la clase de Router
 *               example: true
 * 
 */
+
+/**
+ * * Documentando todos los productos
+ * @swagger
+ * /api/products:
+ *    get:
+ *      summary: Get a list of products
+ *      tags: 
+ *         - Products
+ *      description: Return a list of products
+ *      responses: 
+ *        200:
+ *          description: Successful response
+ *          content: 
+ *            application/json:
+ *               schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#/components/schemas/Product'
+ */
 
 // ! ROUTING
 router.get('/', getProducts)
