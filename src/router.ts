@@ -56,7 +56,7 @@ const router = Router() // * Creamos una instancia de la clase de Router
 router.get('/', getProducts)
 
 /**
- * * Docuemntando endpoint para ontener producto por ID:
+ * * Docuemntando endpoint para obtener producto por ID:
  * @swagger
  * /api/products/{id}:
  *    get:
@@ -90,6 +90,40 @@ router.get('/:id',
   getProductByID
 )
 
+
+/**
+ * * Documentacion para endpoint POST - Crear Producto
+ * @swagger
+ * /api/products:
+ *  post:
+ *    summary: Creates a new Product
+ *    tags:
+ *      - Products
+ *    description: Returns a new record in the database
+ *    requestBody:
+ *        required: true
+ *        content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  name:
+ *                    type: string
+ *                    example: "Monitor Curvo 49 Pulgadas"
+ *                  price:
+ *                    type: number
+ *                    example: 399
+ *                  availability:
+ *                    type: boolean
+ *                    example: true
+ *    responses:
+ *      201:
+ *        description: Product created successfully
+ *      400:
+ *        description: Bad request - invalid input data
+ *        
+ *    
+ */
 router.post('/',
    // ! Validation
     body('name').notEmpty().withMessage('Product name cannot be empty'),
