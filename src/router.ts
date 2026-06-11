@@ -141,7 +141,8 @@ router.post('/',
 )
 
 
-/** * Documentacion a endpoint PUT
+/** 
+ * * Documentacion a endpoint PUT
  * @swagger
  * /api/products/{id}:
  *  put:
@@ -200,7 +201,8 @@ router.put('/:id',
 )
 
 
-/** * Documentacion de endpoint PUT
+/** 
+ * * Documentacion de endpoint PATCH
  * @swagger
  *  /api/products/{id}:
  *    patch:
