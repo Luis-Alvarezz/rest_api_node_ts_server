@@ -63,7 +63,7 @@ router.get('/', getProducts)
  *      summary: Get a Product by ID
  *      tags: 
  *        - Products
- *      description: Return a producto based on its unique ID
+ *      description: Return a product based on its unique ID
  *      parameters:
  *      - in: path
  *        name: id
@@ -237,6 +237,35 @@ router.patch('/:id',
   updatedAvailability
 )
 
+/**
+ * * Documentacion de endpoint DELETE
+ * @swagger
+ *  /api/products/{id}:
+ *    delete:
+ *      summary: Deletes a product by ID
+ *      tags:
+ *        - Products
+ *      description: Return a product deleted successfully
+ *      parameters:
+ *      - in: path
+ *        name: id
+ *        description: The ID of the product to retrieve
+ *        required: true
+ *        schema:
+ *          type:
+ *            integer
+ *      responses:
+ *        200:
+ *          description: Product deleted successfully
+ *          content:
+ *            application/json:
+ *              type: string
+ *              value: 'Product Deleted'
+ *        400:
+ *          description: Bad Request - Invalid ID
+ *        404:
+ *          description: Product not found
+ */
 router.delete('/:id',
   // ! Validacion
   param('id').isInt().withMessage('ID invalid, need to be numeric'),
